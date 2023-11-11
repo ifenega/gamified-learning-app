@@ -7,6 +7,7 @@ import FormError from '../../../components/InputFields/FormError';
 import CustomPasswordInput from '../../../components/InputFields/CustomPasswordInput';
 import { Button, TextButton } from '../../../components/Buttons/Button';
 import { CustomToast } from '../../../util/util';
+import { useIonRouter } from '@ionic/react';
 
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
 const Signin = (props: Props) => {
 
     // <---------- Utility class --------->
+    const router = useIonRouter()
     // <---------- useSelectors --------->
     // <---------- HOOKS ------------>
     // <---------- useStates + variables ---------->
@@ -26,6 +28,8 @@ const Signin = (props: Props) => {
     // <---------- Functions ---------->
     const onSubmit = (values: any) => {
         CustomToast('success', 'Account successfully created')
+        router.push('/tabs/settings')
+
         // props.handleClose()
     }
 

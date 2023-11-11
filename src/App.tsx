@@ -34,6 +34,10 @@ import './theme/tailwind.css'
 import './theme/variables.css';
 import WelcomeScreen from './pages/auth/WelcomeScreen';
 import Disclaimer from './pages/auth/Disclaimer';
+import { firebaseConfig } from './lib/firebase';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import Tabs from './tabs/Tabs';
 
 setupIonicReact();
 
@@ -44,9 +48,24 @@ const App: React.FC = () => {
   // Keyboard.setResizeMode({ mode: KeyboardResize.Ionic });
   // Keyboard.setScroll({ isDisabled: true });
 
+  // Initialize Firebase
+  // const app = initializeApp(firebaseConfig);
+  // const analytics = getAnalytics(app);
+
+  const isAuthed = true
+
   return (
     <IonApp>
       <IonReactRouter>
+        <Route
+          path="/tabs"
+          render={(props) =>
+            // isAuthed ? 
+            <Tabs />
+            // : <Redirect to="/" />
+          }
+        // render={() => <Tabs />}
+        />
         <Redirect exact from="/" to={"/welcome-screen"} />
         <Route exact path="/welcome-screen" component={WelcomeScreen} />
         <Route exact path="/disclaimer" component={Disclaimer} />

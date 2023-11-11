@@ -101,3 +101,8 @@ ion-modal::part(content) {
 ion-modal.modal-card, ion-modal.modal-sheet {
   --border-radius: 32px;
 }
+
+
+.custom-header ion-title{
+  padding-inline: 0;
+}
