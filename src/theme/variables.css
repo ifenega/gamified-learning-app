@@ -106,3 +106,7 @@ ion-modal.modal-card, ion-modal.modal-sheet {
 .custom-header ion-title{
   padding-inline: 0;
 }
+
+ion-toolbar {
+  --background: #fff;
+}
