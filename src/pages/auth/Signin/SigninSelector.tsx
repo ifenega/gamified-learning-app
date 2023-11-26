@@ -1,6 +1,6 @@
 import { useIonRouter } from '@ionic/react'
 import React, { useState } from 'react'
-import SheetModal from '../../../components/UI/SheetModal'
+import SheetModal from '../../../components/UI/Modals/SheetModal'
 import Signin from './Signin'
 import ResetPassword from './ResetPassword/ResetPassword'
 import CreateNewPassword from './ResetPassword/CreateNewPassword'

@@ -52,6 +52,7 @@ const Signin = (props: Props) => {
                                     />
                                     <Field
                                         name="email"
+                                        type="email"
                                         component={CustomInput}
                                         placeholder={"Email address"}
                                         onChange={(option: any) => {

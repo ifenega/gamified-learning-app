@@ -17,6 +17,7 @@ const CustomSelect: React.FC<React.SelectHTMLAttributes<HTMLSelectElement>> = (p
 
     const [field, meta, helpers] = useField(props.field.name || '');
 
+
     // Convert the options to the required format
     const customOptions: CustomOptionType[] = props.options.map((option: any) => ({
         label: option.label,
@@ -34,20 +35,42 @@ const CustomSelect: React.FC<React.SelectHTMLAttributes<HTMLSelectElement>> = (p
     };
 
 
-    // Get the selected option
-    const selectedOption = props.defaultValue && customOptions.length > 0 ? customOptions.find((option) => option.value.toLocaleLowerCase() === props.defaultValue.toLocaleLowerCase()) : customOptions.find((option) => option.value === field.value);
+    const selectedOption =
+        (props.value && customOptions.find((option) => option.value === props.value)) ||
+        (props.defaultValue &&
+            customOptions.find(
+                (option) => {
+
+                    const defaultValue = `${props.defaultValue}`
+                    const optionValue = `${option.value}`
+                    return optionValue.toLocaleLowerCase() === defaultValue.toLocaleLowerCase()
+                }
+            ));
+
 
 
     // Define a placeholder option if selectedOption is undefined
-    const placeholderOption: CustomOptionType = { label: 'Select an option', value: '', icon: '' };
+    const getOptionProps = (option: any, { isFocused, isDisabled }: { isFocused: boolean; isDisabled: boolean }) => {
+        return {
+          style: {
+            backgroundColor: isFocused ? 'blue' : null,
+            cursor: isDisabled ? 'not-allowed' : 'default',
+          },
+        };
+      };
+
+
+      //Ife:fix issue with hover and selected options
 
     return (
         <Select
             {...props}
+            getOptionProps={getOptionProps}
             className='text-sm text-[#13201C]'
             options={customOptions}
-            defaultValue={selectedOption || placeholderOption}
+            defaultValue={selectedOption}
             value={selectedOption}
+            placeholder={props.placeholder ? props.placeholder : ""}
             onChange={handleChange}
             isSearchable
             styles={customDropDownStyles}

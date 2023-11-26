@@ -1,4 +1,5 @@
-
+import fearfulred from '../assets/dashboard/Settings/avatars/fearfulred.svg'
+import fiveeyedsunny from '../assets/dashboard/Settings/avatars/fiveeyedsunny.svg'
 
 
 export const customDropDownStyles = {
@@ -40,12 +41,12 @@ export const customDropDownStyles = {
             display: 'none',
         },
     }),
-    option: (provided: any, state: { isSelected: any; }) => ({
+    option: (provided: any, state: { isSelected: any; isHovered: any }) => ({
         ...provided,
-        backgroundColor: state.isSelected ? '#F9F9FA' : '#FFFFFF',
+        backgroundColor: state.isSelected ? '#F9F9FA' : state.isHovered ? "#F0F9FF" : '#FFFFFF',
         color: '#344054',
         '&:hover': {
-            backgroundColor: 'rgb(229 231 235 / 1)',
+            backgroundColor: '#F0F9FF',
         },
     }),
     separator: (provided: any, state: any) => ({
@@ -76,3 +77,18 @@ export const CustomToast = (type: ToastType, message: string, title?: string, ca
     window.dispatchEvent(event);
 };
 
+
+export const currentAvatar = () => {
+    const avatar = localStorage.getItem("current_avatar")
+
+    if (avatar === null) {
+        return fearfulred
+    } else if (avatar === "Fearful red") {
+        return fearfulred
+    } else if (avatar === "5 eyed sunny") {
+        return fiveeyedsunny
+    } else {
+        return fearfulred
+    }
+
+}

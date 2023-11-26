@@ -13,11 +13,11 @@ type Props = {
 
 const AlertInfo = (props: Props) => {
 
-    const toastBG = `${props.type === 'error' ? 'bg-[#FDEBEB]' : props.type === 'success' ? 'bg-[#EBFDED]' : 'bg-[#EBF7FD]'}`;
+    const toastBG = `${props.type === 'error' ? 'bg-[#FDEBEB]' : props.type === 'success' ? 'bg-[#EBFDED]' : props.type === 'warning' ? "bg-[rgba(247,178,122,0.40)]" : 'bg-[#EBF7FD]'}`;
     const icon = props.type === 'error' ? warning : props.type === 'success' ? success : bulb;
 
     return (
-        <div className={`py-2.5 px-4 flex items-start gap-2.5 rounded-lg ${toastBG} text-[#475467] text-xs fold:text-sm fold:leading-5 text-left`}>
+        <div className={`py-2.5 px-4 flex items-start gap-2.5 rounded-lg ${toastBG} ${props.type === "warning" ? " text-gray/800 " : " text-[#475467] "}  text-xs fold:text-sm fold:leading-5 text-left`}>
             <img src={icon} alt='' />
             <p>{props.children
                 ? props.children

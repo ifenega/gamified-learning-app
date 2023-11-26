@@ -21,14 +21,27 @@ import settingsActive from '../assets/dashboard/settingsActive.svg'
 import { Route } from 'react-router';
 import SettingsPage from '../pages/Settings/Settings';
 import './Tabs.css'
+import ChildrensProfile from '../pages/Settings/ChildrensProfile/ChildrensProfile';
+import NotificationPreference from '../pages/Settings/NotificationPreference/NotificationPreference';
+import DeleteAccount from '../pages/Settings/DeleteAccount/DeleteAccount';
+import { AppDispatch } from '../store/store';
+import { useDispatch } from 'react-redux';
+import { settingsActions } from '../store/slices/settingsSlice';
+
 
 const Tabs = () => {
+    const dispatch: AppDispatch = useDispatch();
 
     const [activeTab, setActiveTab] = useState("settings");
+    useEffect(() => {
+        if (activeTab === "settings") {
+            dispatch(settingsActions.toggleDisclaimer(true))
+        }
+    }, [activeTab])
+
 
     useEffect(() => {
         document.addEventListener("currentPath", function (data: any) {
-
             setActiveTab(data.detail.name);
         });
     }, []);
@@ -44,11 +57,15 @@ const Tabs = () => {
                 >
                     <IonRouterOutlet animated={false}>
                         {/* Home Route */}
+                        {/* Settinfs Route */}
                         <Route path="/tabs/settings" component={SettingsPage} exact />
+                        <Route path="/tabs/settings/childrens-profile" component={ChildrensProfile} exact />
+                        <Route path="/tabs/settings/notification-preference" component={NotificationPreference} exact />
+                        <Route path="/tabs/settings/delete-account" component={DeleteAccount} exact />
                     </IonRouterOutlet>
 
                     <IonTabBar slot="bottom" id="app-tab-bar">
-                        <IonTabButton tab="lessons" href="/tabs/lessons">
+                        <IonTabButton tab="lessons" href="/tabs/lessons" >
                             <IonIcon icon={activeTab === "lessons" ? lessonsActive : lessons} />
                             <IonLabel>Lessons</IonLabel>
                         </IonTabButton>

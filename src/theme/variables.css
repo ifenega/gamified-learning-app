@@ -74,8 +74,6 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
-
-
 }
 
 ion-content::part(scroll) {
@@ -95,18 +93,71 @@ ion-modal::part(content) {
   background: transparent;
 }
 ::part(background) {
-  
   background: transparent;
 }
-ion-modal.modal-card, ion-modal.modal-sheet {
+ion-modal.modal-card,
+ion-modal.modal-sheet {
   --border-radius: 32px;
 }
 
-
-.custom-header ion-title{
+.custom-header ion-title {
   padding-inline: 0;
 }
 
 ion-toolbar {
   --background: #fff;
+}
+
+.css-art2ul-ValueContainer2,
+.css-w9q2zk-Input2,
+.css-196yvjw-indicatorContainer {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.css-1u9des2-indicatorSeparator {
+  display: none;
+}
+.css-dkofqm-control {
+  height: 50px;
+}
+
+.inner-header .toolbar-title {
+  text-align: center !important;
+}
+
+.custom-header .icon-inner,
+.ionicon,
+svg {
+  width: inherit;
+  height: inherit;
+}
+
+.custom-header .button-native {
+  padding: 0 !important;
+}
+
+/* .hide-scrollbar::-webkit-scrollbar {
+  width: 0.5em; /* Adjust the width as needed */
+/* } */
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hide the thumb */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0; /* Hide the scrollbar in WebKit browsers */
+}
+
+.hide-scrollbar {
+  scrollbar-width: thin; /* Hide the scrollbar in Firefox */
+  scrollbar-color: transparent transparent; /* Hide the scrollbar in Firefox */
+}
+
+.transparent-loader > .ion-page {
+  background: transparent;
+  backdrop-filter: blur(8px) !important;
+}
+
+.backdrop-blur-8 {
+  backdrop-filter: blur(8px) ;
 }

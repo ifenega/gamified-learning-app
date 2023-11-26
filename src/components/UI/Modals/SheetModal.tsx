@@ -1,7 +1,7 @@
 import { IonModal } from "@ionic/react";
 import React, { useState } from "react";
-import ToastContainer from "./CustomToast";
-import close from '../../assets/components/general/close.svg'
+import close from '../../../assets/components/general/close.svg'
+import ToastContainer from "../CustomToast";
 
 type Props = {
     children: any;

@@ -36,21 +36,21 @@ const WelcomeScreen = () => {
 
                     <div className='flex flex-col gap-[14px] items-center absolute bottom-0 w-full py-4 bg-white'>
                         <Button
-                            text={'Create an account'}
-                            action={() => {
-                                router.push('/disclaimer')
-                            }}
-                            type='button'
-                            disabled={false}
-
-                        />
-
-                        <TextButton
                             text={'Have an account? Sign in'}
                             type='button'
                             action={() => {
                                 setSignin(true)
                             }}
+                            disabled={false}
+
+                        />
+
+                        <TextButton
+                            text={'Create an account'}
+                            action={() => {
+                                router.push('/disclaimer')
+                            }}
+                            type='button'
                             disabled={false}
 
                         />
