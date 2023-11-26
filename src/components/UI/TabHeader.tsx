@@ -7,7 +7,6 @@ import backButton from '../../assets/components/general/backButton.svg'
 type Props = {
     defaultHref?: string;
     title: string;
-    info?: string;
     info_action?: () => void;
 
 };
@@ -24,7 +23,7 @@ const TabHeader = (props: Props) => {
                     </IonButtons>
                 }
                 <IonTitle className={props.defaultHref ? "ion-text-center" : "ion-text-left"}>{props.title}</IonTitle>
-                {props.info && <IonButtons slot="end" onClick={props.info_action}><img src={info} /></IonButtons>}
+                {props.info_action && <IonButtons slot="end" onClick={props.info_action}><img src={info} /></IonButtons>}
 
             </IonToolbar>
         </IonHeader>

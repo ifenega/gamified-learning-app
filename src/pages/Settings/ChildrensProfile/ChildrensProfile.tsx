@@ -128,7 +128,7 @@ const ChildrensProfile = () => {
                                                 options={genderOptions}
                                                 placeholder={"What’s your child’s gender?"}
                                                 onChange={(option: any) => {
-                                                    setFieldValue("full_name", option.value)
+                                                    setFieldValue("gender", option.value)
                                                 }}
 
                                             />

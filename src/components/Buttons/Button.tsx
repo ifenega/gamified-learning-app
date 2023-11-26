@@ -34,7 +34,7 @@ const BorderButton = (props: Props) => {
             onClick={props.action}
             type={props.type}
             disabled={props.disabled}
-            className={` rounded-xl py-3 px-2 flex items-center justify-center gap-2 shadow-[0_-3px_0_0_rgba(0,0,0,0.2)_inset] border border-solid ${props.status ? " border-teal/300 text-teal/400 " : " border-teal/400 active:border-teal/600 active:text-teal/600 disabled:border-teal/300 disabled:text-teal/300 text-teal/500 "} bg-transparent text-sm font-medium leading-5 w-full`}
+            className={` rounded-xl py-3 px-2 flex items-center justify-center gap-2  border border-solid ${props.status ? " border-teal/300 text-teal/400 " : " border-teal/400 active:border-teal/600 active:text-teal/600 disabled:border-teal/300 disabled:text-teal/300 text-teal/500 "} bg-transparent text-sm font-medium leading-5 w-full`}
 
         >
             {props.text}

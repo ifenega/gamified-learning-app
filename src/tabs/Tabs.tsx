@@ -27,12 +27,13 @@ import DeleteAccount from '../pages/Settings/DeleteAccount/DeleteAccount';
 import { AppDispatch } from '../store/store';
 import { useDispatch } from 'react-redux';
 import { settingsActions } from '../store/slices/settingsSlice';
+import Points from '../pages/Points/Points';
 
 
 const Tabs = () => {
     const dispatch: AppDispatch = useDispatch();
 
-    const [activeTab, setActiveTab] = useState("settings");
+    const [activeTab, setActiveTab] = useState("points");
     useEffect(() => {
         if (activeTab === "settings") {
             dispatch(settingsActions.toggleDisclaimer(true))
@@ -57,7 +58,11 @@ const Tabs = () => {
                 >
                     <IonRouterOutlet animated={false}>
                         {/* Home Route */}
-                        {/* Settinfs Route */}
+
+                        {/* Points Route */}
+                        <Route path="/tabs/points" component={Points} exact />
+
+                        {/* Settings Route */}
                         <Route path="/tabs/settings" component={SettingsPage} exact />
                         <Route path="/tabs/settings/childrens-profile" component={ChildrensProfile} exact />
                         <Route path="/tabs/settings/notification-preference" component={NotificationPreference} exact />

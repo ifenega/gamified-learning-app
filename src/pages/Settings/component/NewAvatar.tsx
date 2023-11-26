@@ -18,58 +18,7 @@ interface AvatarListProps {
 
 const NewAvatar: React.FC<Props> = (props) => {
 
-    const points_data = [
-        {
-            text: "Completed the Math Adventure Quest",
-            time: "12/03/2023",
-            points: 6
-        },
-        {
-            text: "Discovered the Science Galaxy Explorer",
-            time: "15/03/2023",
-            points: 4
-        },
-        {
-            text: "Unlocked the Vocabulary Kingdom",
-            time: "18/03/2023",
-            points: 8
-        },
-        {
-            text: "Helped a virtual friend in Coding Town",
-            time: "20/03/2023",
-            points: 2
-        },
-        {
-            text: "Participated in the Spellathon Challenge",
-            time: "22/03/2023",
-            points: 6
-        },
-        {
-            text: "Built a Digital Robot in RoboCrafters",
-            time: "25/03/2023",
-            points: 8
-        },
-        {
-            text: "Published a story in the Creative Writing Cove",
-            time: "28/03/2023",
-            points: 10
-        },
-        {
-            text: "Explored the wonders of Geography World",
-            time: "30/03/2023",
-            points: 4
-        },
-        {
-            text: "Collaborated on an Animal Safari Adventure",
-            time: "02/04/2023",
-            points: 6
-        },
-        {
-            text: "Achieved the Super Explorer Badge",
-            time: "05/04/2023",
-            points: 8
-        },
-    ];
+   
 
     const avatars: AvatarListProps[] = [
         {
@@ -83,7 +32,7 @@ const NewAvatar: React.FC<Props> = (props) => {
             disabled: false,
         },
         {
-            name: "Fearful red",
+            name: "Fearful reed",
             icon: fearfulred,
             disabled: false,
         },
