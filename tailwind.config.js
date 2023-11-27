@@ -38,8 +38,8 @@ export default {
 
       },
       screens: {
-        fold: "200px",
-        fold: "300px",
+
+        fold: "400px",
       }
     },
   },

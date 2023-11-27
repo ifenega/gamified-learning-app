@@ -52,7 +52,7 @@ const NewAvatar: React.FC<Props> = (props) => {
             header={props.header}
             subheader={props.subheader}
         >
-            <div className='mt-4 flex flex-row flex-wrap justify-between '>
+            <div className='mt-4 flex flex-row flex-wrap justify-between gap-4'>
                 {
                     avatars.map((item, index) => (
                         <button
@@ -67,7 +67,7 @@ const NewAvatar: React.FC<Props> = (props) => {
                         >
 
                             <div className={` border border-solid rounded-full p-[17px] ${currentAvatar === item.name ? " border-[#0BA5EC] " : " border-gray/100 "}`}>
-                                <img src={item.icon} alt="" />
+                                <img src={item.icon} alt="" className='w-[50px] fold:w-full' />
                             </div>
 
 

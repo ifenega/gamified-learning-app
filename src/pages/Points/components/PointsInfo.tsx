@@ -19,7 +19,7 @@ const PointsInfo = (props: Props) => {
             className="my-sheet"
             isOpen={props.modalIsOpen}
             initialBreakpoint={props.breakpoint}
-            breakpoints={[0, props.breakpoint]}
+            breakpoints={[0, props.breakpoint, 0.95]}
             onDidDismiss={props.closeModal}
         >
             <div
