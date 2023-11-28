@@ -6,7 +6,7 @@ import childrenIcon from '../../assets/dashboard/Settings/childrenIcon.svg'
 import notificationIcon from '../../assets/dashboard/Settings/notificationIcon.svg'
 import deleteIcon from '../../assets/dashboard/Settings/deleteIcon.svg'
 import arrowRight from '../../assets/components/general/arrowRight.svg'
-import DisclaimerModal from '../../components/UI/Modals/DiscailmerModal';
+import DisclaimerModal from '../../components/UI/Modals/DisclaimerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { settingsActions } from '../../store/slices/settingsSlice';
 import { AppDispatch } from '../../store/store';

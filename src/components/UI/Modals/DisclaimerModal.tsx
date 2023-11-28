@@ -5,7 +5,7 @@ import { BorderButton, Button } from '../../Buttons/Button'
 
 type Props = {
     header: string
-    text: string
+    text?: string
     isOpen: boolean
     bgButtonAction: () => void
     bgButtonText: string
@@ -15,6 +15,7 @@ type Props = {
     noBgButtonText?: string
     noBgButtonDisabled?: boolean
     noBgButtonStatus?: boolean
+    children?: any
 }
 const DisclaimerModal = (props: Props) => {
 
@@ -34,7 +35,7 @@ const DisclaimerModal = (props: Props) => {
                             <h5 className='text-gray/800 font-semibold tracking-[-0.3px] text-xl '>{props.header}</h5>
                         </div>
 
-                        <p className='text-gray/700 text-sm tracking-[-0.21px] '>{props.text}</p>
+                        <p className='text-gray/700 text-sm tracking-[-0.21px] '>{props.text}{props.children}</p>
                     </div>
 
                     <div className='flex flex-col gap-4 '>

@@ -3,6 +3,7 @@ import React from 'react'
 import { BorderButton, Button } from '../../Buttons/Button'
 import coin from "../../../assets/dashboard/Points/coin.svg"
 import pattern from '../../../assets/components/general/pattern2.svg'
+import DisclaimerModal from './DisclaimerModal'
 
 
 type Props = {
@@ -26,7 +27,7 @@ const PointsModal = (props: Props) => {
             <div className='absolute h-[100vh] w-full bg-black bg-opacity-40 backdrop-blur-8  flex items-center justify-center gap-2 flex-col p-4'>
 
                 <div className='rounded-[32px] '>
-                    <div className='pt-4 pb-2 flex flex-col items-center justify-center bg-[#FEFAF5]'>
+                    <div className='pt-4 pb-2 flex flex-col items-center justify-center bg-[#FEFAF5] overflow-hidden'>
                         <img src={pattern} alt='' className='absolute object-cover w-full h-full top-0 left-0' />
                         <img src={coin} alt="" className='w-[64px] h-[64px]' />
                         <h5 className='text-[#D84905] text-xl font-semibold tracking-[-0.3px]'>{props.header ? props.header : "2 points"}</h5>
@@ -49,8 +50,24 @@ const PointsModal = (props: Props) => {
 
 
             </div>
-        </IonModal>
+            {/* <DisclaimerModal
+                isOpen={false}
+                header='Exit lesson'
+                bgButtonText='Continue lesson'
+                bgButtonAction={() => { }}
+                noBgButtonText='Exit lesson'
+                noBgButtonAction={() => { }}
+
+            >
+                <>
+                    <p>Are you sure you want to exit this lesson now? </p>
+                    <br />
+                    <p>You will lose all progress when you exit now.</p>
+                </>
+            </DisclaimerModal> */}
+        </IonModal >
     )
 }
 
 export default PointsModal
+
