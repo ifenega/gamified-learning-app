@@ -7,7 +7,7 @@ import DisclaimerModal from './DisclaimerModal'
 
 
 type Props = {
-    header: string
+    header?: string
     text: string
     isOpen: boolean
     action: () => void
@@ -26,8 +26,8 @@ const PointsModal = (props: Props) => {
         >
             <div className='absolute h-[100vh] w-full bg-black bg-opacity-40 backdrop-blur-8  flex items-center justify-center gap-2 flex-col p-4'>
 
-                <div className='rounded-[32px] '>
-                    <div className='pt-4 pb-2 flex flex-col items-center justify-center bg-[#FEFAF5] overflow-hidden'>
+                <div className='rounded-[32px] overflow-hidden '>
+                    <div className='pt-4 pb-2 flex flex-col items-center justify-center bg-[#FEFAF5] overflow-hidden relative'>
                         <img src={pattern} alt='' className='absolute object-cover w-full h-full top-0 left-0' />
                         <img src={coin} alt="" className='w-[64px] h-[64px]' />
                         <h5 className='text-[#D84905] text-xl font-semibold tracking-[-0.3px]'>{props.header ? props.header : "2 points"}</h5>

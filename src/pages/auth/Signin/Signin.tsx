@@ -28,7 +28,7 @@ const Signin = (props: Props) => {
     // <---------- Functions ---------->
     const onSubmit = (values: any) => {
         CustomToast('success', 'Account successfully created')
-        router.push('/tabs/points')
+        router.push('/tabs/lessons')
 
         // props.handleClose()
     }

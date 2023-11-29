@@ -4,19 +4,19 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import type { User } from 'firebase/auth';
 
-const initialData: SettingsSliceData = {
-    isDisclaimer: true,
+const initialData: LessonSliceData = {
+    currentLesson: null
 }
 
 
 
 
-export const settingsSlice = createSlice({
-    name: "settings",
+export const lessonSlice = createSlice({
+    name: "lesson",
     initialState: initialData,
     reducers: {
-        toggleDisclaimer: (state, action) => {
-            state.isDisclaimer = action.payload
+        setCurrentLesson: (state, action) => {
+            state.currentLesson = action.payload
         },
     },
     // extraReducers(builder) {
@@ -46,5 +46,5 @@ export const settingsSlice = createSlice({
     // }
 })
 
-export const settingsActions = settingsSlice.actions;
-export default settingsSlice.reducer;
+export const lessonActions = lessonSlice.actions;
+export default lessonSlice.reducer;

@@ -28,12 +28,13 @@ import { AppDispatch } from '../store/store';
 import { useDispatch } from 'react-redux';
 import { settingsActions } from '../store/slices/settingsSlice';
 import Points from '../pages/Points/Points';
+import LessonHome from '../pages/Lessons/LessonHome';
 
 
 const Tabs = () => {
     const dispatch: AppDispatch = useDispatch();
 
-    const [activeTab, setActiveTab] = useState("points");
+    const [activeTab, setActiveTab] = useState("lessons");
     useEffect(() => {
         if (activeTab === "settings") {
             dispatch(settingsActions.toggleDisclaimer(true))
@@ -58,6 +59,7 @@ const Tabs = () => {
                 >
                     <IonRouterOutlet animated={false}>
                         {/* Home Route */}
+                        <Route path="/tabs/lessons" component={LessonHome} exact />
 
                         {/* Points Route */}
                         <Route path="/tabs/points" component={Points} exact />

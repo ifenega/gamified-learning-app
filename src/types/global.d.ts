@@ -8,4 +8,7 @@ declare global {
     interface SettingsSliceData {
         isDisclaimer: boolean
     }
+    interface LessonSliceData {
+        currentLesson: any
+    }
 }
