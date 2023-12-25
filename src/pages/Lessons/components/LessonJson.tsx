@@ -1,7 +1,7 @@
 import networkImage from "../../../assets/dashboard/Lessons/network.svg"
 
 export const firstLesson = {
-  title: "Introduction to the Internet of Things (IoT)",
+  title: "Internet of Things (IoT)",
   sections: {
     lessonDetails: {
       image: networkImage,
@@ -14,7 +14,7 @@ export const firstLesson = {
   content: [
     {
       title: "Basic Meaning of IoT",
-      description: "Imagine a magical world where things can communicate and collaborate without constant human intervention. That's the essence of the Internet of Things, or IoT for short.",
+      description: "Alright, imagine you have a magical worldwhere things can talk to each other and work together without you having to tell them what to do all the time. That's a bit like the Internet of Things, or IoT for short.",
       task: {
         type: "MultipleChoiceQuestion",
         question: "What does IoT stand for?",
@@ -37,7 +37,9 @@ export const firstLesson = {
     {
       title: "Applications of IoT",
       description: "Consider a smart teddy bear that communicates with smart lights. The bear knows when it's bedtime and instructs the lights to create a cozy atmosphere. It's like objects becoming friends and helping each other without human intervention!",
-      task: null,
+      task: {
+        type: ""
+      },
     },
     {
       title: "Smartening Up Everyday Objects",

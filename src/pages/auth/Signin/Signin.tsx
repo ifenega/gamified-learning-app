@@ -54,6 +54,7 @@ const Signin = (props: Props) => {
                                         name="email"
                                         type="email"
                                         component={CustomInput}
+                                        inputMode={"email"}
                                         placeholder={"Email address"}
                                         onChange={(option: any) => {
 

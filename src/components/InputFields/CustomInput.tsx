@@ -9,15 +9,17 @@ type CustomInputProps = {
         type: TextFieldTypes;
         onChange: ChangeEventHandler<HTMLInputElement>;
         onBlur: FocusEventHandler<HTMLInputElement>;
+      
     };
     form: {
         errors: Record<string, string>;
         touched: Record<string, boolean>;
     };
+    inputMode?:"search" | "text" | "email" | "tel" | "url" | "none" | "numeric" | "decimal" | undefined
     // Add any other props that your component accepts here
 };
 
-const CustomInput: React.FC<CustomInputProps> = ({ field, form, ...props }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ field, form, inputMode, ...props }) => {
     const { name, value, type } = field;
     const { errors, touched } = form;
 
@@ -28,6 +30,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, form, ...props }) => {
             <input
                 {...props}
                 type={type}
+                inputMode={inputMode}
                 id={name}
                 name={name}
                 value={value}

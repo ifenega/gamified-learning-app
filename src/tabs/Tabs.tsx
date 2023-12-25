@@ -29,6 +29,7 @@ import { useDispatch } from 'react-redux';
 import { settingsActions } from '../store/slices/settingsSlice';
 import Points from '../pages/Points/Points';
 import LessonHome from '../pages/Lessons/LessonHome';
+import LessonSelector from '../pages/Lessons/components/ContentSelector/ContentSelector';
 
 
 const Tabs = () => {
@@ -60,6 +61,7 @@ const Tabs = () => {
                     <IonRouterOutlet animated={false}>
                         {/* Home Route */}
                         <Route path="/tabs/lessons" component={LessonHome} exact />
+                        <Route path="/tabs/lessons/lesson" component={LessonSelector} exact />
 
                         {/* Points Route */}
                         <Route path="/tabs/points" component={Points} exact />

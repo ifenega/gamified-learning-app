@@ -40,6 +40,7 @@ export default {
       screens: {
 
         fold: "400px",
+        small: "350px"
       }
     },
   },

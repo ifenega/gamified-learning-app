@@ -5,7 +5,7 @@ import { BorderButton, Button } from '../../Buttons/Button'
 
 type Props = {
     header: string
-    text?: string
+    text?: any
     isOpen: boolean
     bgButtonAction: () => void
     bgButtonText: string

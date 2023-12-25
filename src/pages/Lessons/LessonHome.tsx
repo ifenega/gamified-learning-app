@@ -110,7 +110,7 @@ const LessonHome = () => {
 
                 <GameLevel />
 
-                <div className='flex flex-wrap gap-y-5  gap-x-4 mt-4 justify-between overflow-scroll max-h-[calc(100vh-212px)]'>
+                <div className='flex flex-wrap gap-y-5  gap-x-0 fold:gap-x-4 mt-4 justify-between overflow-scroll max-h-[calc(100vh-212px)]'>
                     {
                         lessons.map((item, index) => (
                             <button
@@ -119,14 +119,16 @@ const LessonHome = () => {
                                 disabled={item.disabled}
                                 onClick={() => {
                                     if (item.lesson) {
-                                        const currentLesson = item.lesson
-                                        dispatch(lessonActions.setCurrentLesson({ currentLesson }))
+
+                                        dispatch(lessonActions.setCurrentLesson(item.lesson))
+
+                                        router.push('/tabs/lessons/lesson')
                                     }
 
                                 }}
                             >
                                 <div className='relative'>
-                                    <img src={item.icon} alt="" className='w-[103px] h-[103px]' />
+                                    <img src={item.icon} alt="" className='w-[80px] small:w-[103px] small:h-[103px]' />
                                     {item.completed && <img src={tickCircle} alt="tick-circle" className='absolute bottom-1.5 right-1.5' />}
                                 </div>
                                 <span className='leading-4 text-gray/800 tracking-[-0.21px] font-medium text-sm'>{item.name}</span>

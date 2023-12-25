@@ -54,6 +54,7 @@ const Signup = (props: Props) => {
                                     <Field
                                         name="email"
                                         component={CustomInput}
+                                        inputMode={"email"}
                                         placeholder={"Email address"}
                                         onChange={(option: any) => {
 

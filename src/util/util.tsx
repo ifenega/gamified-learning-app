@@ -92,3 +92,17 @@ export const currentAvatar = () => {
     }
 
 }
+export const currentAvatarName = () => {
+    const avatar = localStorage.getItem("current_avatar")
+
+    if (avatar === null) {
+        return "Fearful red"
+    } else if (avatar === "Fearful red") {
+        return fearfulred
+    } else if (avatar === "5 eyed sunny") {
+        return "5 eyed sunny"
+    } else {
+        return "Fearful red"
+    }
+
+}
