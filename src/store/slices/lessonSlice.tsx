@@ -18,32 +18,26 @@ export const lessonSlice = createSlice({
         setCurrentLesson: (state, action) => {
             state.currentLesson = action.payload
         },
+        updateAnswerCorrect: (state, action) => {
+            const { taskId, isCorrect } = action.payload;
+            // Assuming the structure of your currentLesson object
+            state.currentLesson = {
+                ...state.currentLesson,
+                content: state.currentLesson?.content.map((item: any) =>
+                    item.task.id === taskId ?
+                        {
+                            ...item,
+                            task: {
+                                ...item.task,
+                                isAnswerCorrect: isCorrect
+                            }
+                        }
+                        : item
+                ),
+            };
+        },
     },
-    // extraReducers(builder) {
-    //     builder
 
-    //         // login
-    //         .addCase(signIn.pending, (state, action) => {
-    //             state.signIn.status = "loading";
-    //             state.signIn.error = null;
-    //         })
-    //         .addCase(signIn.fulfilled, (state, action) => {
-    //             if (
-    //                 action.payload.message === "Success" ||
-    //                 action.payload.status === "success"
-    //             ) {
-    //                 state.signIn.data = action.payload;
-    //                 state.signIn.status = "succeeded";
-    //                 state.is_auth = true;
-    //             } else {
-    //                 state.signIn.status = "failed";
-    //                 state.signIn.error = action.payload.message;
-    //             }
-    //         })
-    //         .addCase(signIn.rejected, (state, action) => {
-    //             state.signIn.status = "failed";
-    //         })
-    // }
 })
 
 export const lessonActions = lessonSlice.actions;

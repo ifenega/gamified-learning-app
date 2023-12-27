@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import LessonOutline from '../ContentItems/LessonOutline';
 import LessonIntro from '../ContentItems/LessonIntro';
 import LessonInfo from '../ContentItems/LessonInfo';
+import MCQ from '../ContentItems/QuestionTypes/MCQ';
 
 
 const LessonSelector = () => {
@@ -56,7 +57,7 @@ const LessonSelector = () => {
 
 
     const contentTypes: any = {
-        // MultipleChoiceQuestion: MultipleChoiceQuestion,
+        MultipleChoiceQuestion: MCQ,
         // LessonDetails: LessonDetails,
         // Add other content type components as needed
     };
@@ -77,7 +78,7 @@ const LessonSelector = () => {
 
         const changePage = () => {
 
-            if (currentContent && currentContent.task) {
+            if (currentContent && currentContent.task && currentContent.task.type) {
                 setSubPage("question")
             } else {
                 handleNext()

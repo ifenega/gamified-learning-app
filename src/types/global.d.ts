@@ -13,19 +13,20 @@ declare global {
     }
 
     type TaskType = {
-        type: "MultipleChoiceQuestion" ; //comeback to add any new type
+        id?: number;
+        type: "MultipleChoiceQuestion" | null; //comeback to add any new type
         question: string;
         answer: string;
         options: string[];
         isAnswerCorrect: boolean | null;
     };
-    
+
     type ContentItemType = {
         title: string;
         description: string;
         task: TaskType | null;
     };
-    
+
     interface LessonType {
         title: string;
         sections: {
