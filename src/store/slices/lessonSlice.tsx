@@ -5,7 +5,8 @@ import 'firebase/auth';
 import type { User } from 'firebase/auth';
 
 const initialData: LessonSliceData = {
-    currentLesson: null
+    currentLesson: null,
+    isCompleted: false
 }
 
 
@@ -35,6 +36,11 @@ export const lessonSlice = createSlice({
                         : item
                 ),
             };
+        },
+
+        //this is just to display the you have earned 2 points modal
+        setCourseCompleted: (state, action) => {
+            state.isCompleted = action.payload
         },
     },
 

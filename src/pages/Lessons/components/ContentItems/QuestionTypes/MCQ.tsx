@@ -13,6 +13,8 @@ type Props = {
     data: ContentItemType
     disbaleNext: boolean
     handleNext: () => void
+    correction?: boolean
+    handleCompleted: ()=> void
 }
 
 const MCQ = (props: Props) => {
@@ -35,10 +37,10 @@ const MCQ = (props: Props) => {
         const taskId = props.data.task?.id
 
         if (values.answer === props.data.task?.answer) {
-            dispatch(lessonActions.updateAnswerCorrect({ taskId, isCorrect:true }));
+            dispatch(lessonActions.updateAnswerCorrect({ taskId, isCorrect: true }));
             setCorrect(true)
         } else {
-            dispatch(lessonActions.updateAnswerCorrect({ taskId, isCorrect:false }));
+            dispatch(lessonActions.updateAnswerCorrect({ taskId, isCorrect: false }));
             setCorrect(false)
         }
         setSubmit(true)
@@ -117,8 +119,11 @@ const MCQ = (props: Props) => {
                                         isCorrect={isCorrect}
                                         type='button'
                                         action={() => {
-                                            console.log("check")
-                                            props.handleNext()
+                                            if (!props.disbaleNext) {
+                                                props.handleNext()
+                                            } else {
+                                                props.handleCompleted()
+                                            }
                                         }}
 
                                     />

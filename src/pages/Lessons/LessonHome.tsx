@@ -12,7 +12,7 @@ import book5 from '../../assets/dashboard/Lessons/Books/book5.svg'
 import tickCircle from '../../assets/dashboard/Lessons/tickCircle.svg'
 import { firstLesson } from './components/LessonJson';
 import { AppDispatch } from '../../store/store';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { lessonActions } from '../../store/slices/lessonSlice';
 
 
@@ -22,8 +22,11 @@ const LessonHome = () => {
     const router = useIonRouter()
     const dispatch: AppDispatch = useDispatch()
     // <---- useSelectors ------>
+    const lessonDetails = useSelector((state: { lesson: LessonSliceData }) => state.lesson)
+
     // <---- useStates + variables ------>
     const [showInfo, setShowInfo] = useState(false)
+
     // <------- HOOKS ------>
     useIonViewWillLeave(() => {
 
@@ -144,11 +147,20 @@ const LessonHome = () => {
 
 
                 <PointsModal
+                    isOpen={lessonDetails.isCompleted}
+                    action={() => {
+                        dispatch(lessonActions.setCourseCompleted(false))
+                    }}
+                    text='Hurray! You’’ve earned 2 points for successfully completing this lesson. Keep up the good work.'
+                />
+
+                <PointsModal
                     isOpen={showInfo}
                     action={() => {
                         setShowInfo(false)
                     }}
                     text='You’ll earn 2 points when you successfully complete this lesson.'
+
                 />
             </IonContent>
         </IonPage>

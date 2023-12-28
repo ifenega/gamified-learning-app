@@ -6,11 +6,12 @@ import React, { useState } from 'react';
 import { IonPage, useIonRouter, useIonViewDidEnter, useIonViewWillLeave } from '@ionic/react';
 import ContentHeader from './ContentHeader';
 import DisclaimerModal from '../../../../components/UI/Modals/DisclaimerModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LessonOutline from '../ContentItems/LessonOutline';
 import LessonIntro from '../ContentItems/LessonIntro';
 import LessonInfo from '../ContentItems/LessonInfo';
 import MCQ from '../ContentItems/QuestionTypes/MCQ';
+import { lessonActions } from '../../../../store/slices/lessonSlice';
 
 
 const LessonSelector = () => {
@@ -21,6 +22,7 @@ const LessonSelector = () => {
     console.log(lessonData)
 
     const router = useIonRouter()
+    const dispatch = useDispatch()
 
     useIonViewWillLeave(() => {
         showTabBar();
@@ -34,8 +36,12 @@ const LessonSelector = () => {
 
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentCorrectionIndex, setCurrentCorrectionIndex] = useState(0);
     const [showDisclaimer, setShowDisclaimer] = useState(false);
+    const [showCorrectionDisclaimer, setShowCorrectionDisclaimer] = useState(false);
     const [currentSubPage, setSubPage] = useState("info");
+    const [correctionData, setCorrectionData] = useState<any>()
+
 
     // <---- Functions ------>
 
@@ -62,8 +68,27 @@ const LessonSelector = () => {
         // Add other content type components as needed
     };
 
+    const handleCompleted = () => {
+
+        const temp = lessonData.content.filter((item) => !item.task?.isAnswerCorrect && item.task?.type)
+        console.log('hanldCompleted')
+        console.log(temp)
+        setCorrectionData(temp)
+
+        if (temp.length > 0) {
+            setShowCorrectionDisclaimer(true)
+            handleCorrection()
+        } else {
+            dispatch(lessonActions.setCourseCompleted(true))
+            router.goBack()
+        }
+    }
+
     const handleNext = () => {
+        //to first set the page state to the info page
         setSubPage("info")
+
+        //to move to the next task
         setCurrentIndex(prevIndex => prevIndex + 1);
 
     };
@@ -83,24 +108,38 @@ const LessonSelector = () => {
             } else {
                 handleNext()
             }
-
-
         }
 
         return (
             <>
                 {currentSubPage === "info" && <LessonInfo nextPage={changePage} data={currentContent} />}
-                {currentSubPage === "question" && <ContentTypeComponent data={currentContent} disbaleNext={currentIndex === lessonData.content.length - 1} handleNext={handleNext} />}
+                {currentSubPage === "question" && <ContentTypeComponent data={currentContent} disbaleNext={currentIndex === lessonData.content.length - 1} handleNext={handleNext} handleCompleted={handleCompleted} />}
 
             </>
         );
     };
 
 
+    const renderCorrection = () => {
+        console.log("check")
+        console.log(correctionData)
+        const currentContent: ContentItemType | null = correctionData && correctionData.length > currentCorrectionIndex
+            ? correctionData[currentCorrectionIndex]
+            : null;
+console.log(currentContent)
+        const ContentTypeComponent = currentContent ? contentTypes[currentContent?.task?.type || currentContent?.title] || ErrorPage : ErrorPage;
+
+        return (
+            <ContentTypeComponent data={currentContent} disbaleNext={currentCorrectionIndex === correctionData.length - 1} handleNext={handleNext} handleCompleted={handleCompleted} />
+        )
+
+    }
+
     const [values, setValues] = useState({
         lessonOutline: true,
         intro: false,
         lesson: false,
+        correction: false,
     })
 
     const handleIntro = () => {
@@ -108,21 +147,33 @@ const LessonSelector = () => {
             lessonOutline: false,
             intro: true,
             lesson: false,
+            correction: false,
         })
     }
     const handleLesson = () => {
         setValues({
             lessonOutline: false,
             intro: false,
+            correction: false,
             lesson: true,
         })
     }
+    const handleCorrection = () => {
+        setValues({
+            lessonOutline: false,
+            intro: false,
+            correction: true,
+            lesson: false,
+        })
+    }
 
+    console.log(values)
     const showDefaultSelector = () => (
         <>
             {values.lessonOutline && <LessonOutline img={lessonData.sections.lessonDetails.image} title={lessonData.title} topics={lessonData.sections.lessonDetails.topics} nextPage={handleIntro} />}
             {values.intro && <LessonIntro nextPage={handleLesson} />}
             {values.lesson && renderCurrentComponent()}
+            {values.correction && renderCorrection()}
         </>
     )
 
@@ -137,6 +188,23 @@ const LessonSelector = () => {
                 </button>
             </div>
 
+
+
+
+            {showCorrectionDisclaimer &&
+                <DisclaimerModal
+                    isOpen={showCorrectionDisclaimer}
+                    bgButtonAction={() => {
+                        setShowCorrectionDisclaimer(false)
+                    }}
+                    bgButtonText='Okay'
+                    header='You got some quizzes
+                    wrong'
+                    text={<p>You got some quiz questions wrong, kindly complete them now.</p>}
+
+
+
+                />}
 
             {showDisclaimer &&
                 <DisclaimerModal

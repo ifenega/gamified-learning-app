@@ -10,6 +10,7 @@ declare global {
     }
     interface LessonSliceData {
         currentLesson: any
+        isCompleted: boolean
     }
 
     type TaskType = {
@@ -40,6 +41,7 @@ declare global {
         };
         content: ContentItemType[];
     }
+
 }
 
 
