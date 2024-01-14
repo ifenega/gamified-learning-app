@@ -106,3 +106,13 @@ export const currentAvatarName = () => {
     }
 
 }
+
+export function utf8_to_b64(str: any) {
+    return window.btoa(unescape(encodeURIComponent(str)));
+}
+
+export const getId = () => {
+    const tData = sessionStorage.getItem("_u")
+    const key = decodeURIComponent(escape(window.atob(tData!)))
+    return key
+}

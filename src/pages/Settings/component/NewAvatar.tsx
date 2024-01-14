@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react'
 import SheetModal from '../../../components/UI/Modals/SheetModal'
 import fearfulred from '../../../assets/dashboard/Settings/avatars/fearfulred.svg'
 import fiveeyedsunny from '../../../assets/dashboard/Settings/avatars/fiveeyedsunny.svg'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { db } from '../../../lib/firebase'
+import { CustomToast, getId } from '../../../util/util'
+import { useAppDispatch } from '../../../store/store'
+import { authActions } from '../../../store/slices/authSlice'
+import FullScreenLoader from '../../../components/UI/FullScreenLoader'
 
 type Props = {
     modalIsOpen: boolean;
@@ -18,7 +24,13 @@ interface AvatarListProps {
 
 const NewAvatar: React.FC<Props> = (props) => {
 
-   
+    // <---- Utility class ------>
+    const dispatch = useAppDispatch()
+
+
+    // <---- useStates + variables ------>
+    const [loading, setLoading] = useState(false)
+    const [currentAvatar, setCurrentAvatar] = useState<AvatarType>("Fearful red")
 
     const avatars: AvatarListProps[] = [
         {
@@ -38,8 +50,66 @@ const NewAvatar: React.FC<Props> = (props) => {
         },
     ]
 
-    const [currentAvatar, setCurrentAvatar] = useState<AvatarType>("Fearful red")
 
+
+
+    const updateAvatar = async (avatar: AvatarType) => {
+
+        const id = getId()
+        console.log(id)
+        setLoading(true)
+        const currentTime = new Date()
+        try {
+            const docRef = doc(db, "users", id);
+            await updateDoc(docRef, {
+                avatar: avatar,
+                updatedAt: currentTime.toLocaleTimeString(),
+            })
+                .then(async () => {
+
+                    console.log("cjecl")
+                    try {
+                        const docSnap = await getDoc(docRef);
+                        console.log(docSnap)
+                        if (docSnap.exists()) {
+                            CustomToast('success', "Updated...")
+                            dispatch(authActions.setUserDetails({ ...docSnap.data(), id: docSnap.id }))
+                            console.log({ ...docSnap.data(), id: docSnap.id })
+                            setLoading(false)
+                            setCurrentAvatar(avatar)
+                            localStorage.setItem("current_avatar", avatar)
+                        } else {
+                            console.log("check2")
+                            setLoading(false)
+                            CustomToast('error', "Network Error")
+                        }
+                    } catch (error: any) {
+                        if (error.code === "unavailable") {
+                            // Firebase error code for network issues
+                            setLoading(false)
+                            CustomToast('error', "Network Error")
+                        } else {
+                            setLoading(false)
+                            CustomToast('error', error.message)
+
+                        }
+                    }
+                })
+                .catch((error: any) => {
+                    console.log(error)
+                    setLoading(false)
+                    const errorCode = error.code;
+                    CustomToast('error', errorCode)
+                })
+
+
+        } catch (error: any) {
+            console.log(error)
+            setLoading(false)
+            const errorCode = error.code;
+            CustomToast('error', errorCode)
+        }
+    }
 
 
     return (
@@ -60,8 +130,9 @@ const NewAvatar: React.FC<Props> = (props) => {
                             type='button'
                             disabled={item.disabled}
                             onClick={() => {
-                                setCurrentAvatar(item.name)
-                                localStorage.setItem("current_avatar",item.name)
+
+                                updateAvatar(item.name)
+                               
                             }}
                             className='flex flex-col gap-1 items-center'
                         >
@@ -78,6 +149,9 @@ const NewAvatar: React.FC<Props> = (props) => {
                 }
 
             </div>
+
+            <FullScreenLoader loading={loading} text=''
+            />
         </SheetModal>
     )
 }

@@ -30,3 +30,8 @@ ion-tab-bar {
     margin: 0;
     padding-bottom: 4px;
 }
+
+.custom-header .icon-inner, .ionicon, svg {
+  width: auto;
+  height: auto;
+}

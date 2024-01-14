@@ -1,4 +1,4 @@
-import { IonContent, IonPage, useIonRouter } from '@ionic/react'
+import { IonContent, IonPage, useIonRouter, useIonViewWillLeave } from '@ionic/react'
 import React, { useState } from 'react'
 import welcomeScreenImg from '../../assets/auth/welcomeScreenImg.png'
 import { Button, TextButton } from '../../components/Buttons/Button'
@@ -12,7 +12,17 @@ const WelcomeScreen = () => {
     // <---- useStates + variables ------>
     const [isSignin, setSignin] = useState(false)
     // <------- HOOKS ------>
+    useIonViewWillLeave(() => {
+        hideTabBar();
+    });
+    
     // <------- Functions ------>
+    const hideTabBar = (): void => {
+        const tabBar = document.getElementById('app-tab-bar');
+        if (tabBar !== null) {
+            tabBar.style.display = 'none';
+        }
+    };
     const handleCloseSignin = () => {
         setSignin(false)
     }

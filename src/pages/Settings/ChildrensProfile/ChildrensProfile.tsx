@@ -1,5 +1,5 @@
 import { IonContent, IonPage, useIonRouter, useIonViewDidEnter, useIonViewWillLeave } from '@ionic/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import CustomLabel from '../../../components/InputFields/CustomLabel';
@@ -8,14 +8,27 @@ import FormError from '../../../components/InputFields/FormError';
 import { Button } from '../../../components/Buttons/Button';
 import CustomSelect from '../../../components/InputFields/CustomSelect';
 import TabHeader from '../../../components/UI/TabHeader';
+import { useSelector } from 'react-redux';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { CustomToast, getId } from '../../../util/util';
+import { db } from '../../../lib/firebase';
+import { useAppDispatch } from '../../../store/store';
+import { authActions } from '../../../store/slices/authSlice';
+import ToastContainer from '../../../components/UI/CustomToast';
 
 
 const ChildrensProfile = () => {
 
     // <---- Utility class ------>
+    const dispatch = useAppDispatch()
     const router = useIonRouter()
+
     // <---- useSelectors ------>
+    const authDetails = useSelector(
+        (state: { auth: authSliceData }) => state.auth)
+
     // <---- useStates + variables ------>
+    const [loading, setLoading] = useState(false)
     const genderOptions = [
         { label: "Male", value: "Male", },
         { label: "Female", value: "Female", },
@@ -53,21 +66,74 @@ const ChildrensProfile = () => {
     };
 
 
-    const onSubmit = (values: any) => {
-        // console.log()
+    const onSubmit = async (values: any) => {
+
+        const id = getId()
+        console.log(id)
+        setLoading(true)
+        const currentTime = new Date()
+        try {
+            const docRef = doc(db, "users", id);
+            await updateDoc(docRef, {
+                ...values,
+                updatedAt: currentTime.toLocaleTimeString(),
+            })
+                .then(async () => {
+
+                    console.log("cjecl")
+                    try {
+                        const docSnap = await getDoc(docRef);
+                        console.log(docSnap)
+                        if (docSnap.exists()) {
+                            CustomToast('success', "Updated...")
+                            dispatch(authActions.setUserDetails({ ...docSnap.data(), id: docSnap.id }))
+                            console.log({ ...docSnap.data(), id: docSnap.id })
+                            setLoading(false)
+                        } else {
+                            console.log("check2")
+                            setLoading(false)
+                            CustomToast('error', "Network Error")
+                        }
+                    } catch (error: any) {
+                        if (error.code === "unavailable") {
+                            // Firebase error code for network issues
+                            setLoading(false)
+                            CustomToast('error', "Network Error")
+                        } else {
+                            setLoading(false)
+                            CustomToast('error', error.message)
+
+                        }
+                    }
+                })
+                .catch((error: any) => {
+                    console.log(error)
+                    setLoading(false)
+                    const errorCode = error.code;
+                    CustomToast('error', errorCode)
+                })
+
+
+        } catch (error: any) {
+            console.log(error)
+            setLoading(false)
+            const errorCode = error.code;
+            CustomToast('error', errorCode)
+        }
+
     }
 
     return (
         <IonPage className='ion-padding inner-header'>
             <TabHeader title="Children's profile" defaultHref='/tabs/settings' />
-            <IonContent className='mt-[45px]'>
+            <IonContent className='mt-[45px] relative'>
+
+                <div className='absolute top-[70px] w-full  '>
+                    <ToastContainer />
+                </div>
                 <div className='pb-4 '>
                     <Formik
-                        initialValues={{
-                            full_name: "",
-                            age: "",
-                            gender: "",
-                        }}
+                        initialValues={authDetails.userDetails}
                         onSubmit={onSubmit}
                         validationSchema={validation}
                     >
@@ -142,8 +208,8 @@ const ChildrensProfile = () => {
                                         <Button
                                             text={'Save changes'}
                                             type='submit'
-                                            disabled={!(isValid)}
-                                            status={false}
+                                            disabled={!(isValid) || loading}
+                                            status={loading}
 
 
                                         />
