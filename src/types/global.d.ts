@@ -12,7 +12,10 @@ declare global {
         currentLesson: any
         isCompleted: boolean
     }
-
+    interface authSliceData {
+        userDetails: any;
+        
+    }
     type TaskType = {
         id?: number;
         type: "MultipleChoiceQuestion" | null; //comeback to add any new type

@@ -1,5 +1,5 @@
 import { IonButton, IonContent, IonPage, useIonRouter, useIonViewDidEnter, useIonViewWillLeave } from '@ionic/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TabHeader from '../../components/UI/TabHeader';
 import fearfulred from '../../assets/dashboard/Settings/avatars/fearfulred.svg'
 import childrenIcon from '../../assets/dashboard/Settings/childrenIcon.svg'
@@ -12,6 +12,9 @@ import { settingsActions } from '../../store/slices/settingsSlice';
 import { AppDispatch } from '../../store/store';
 import NewAvatar from './component/NewAvatar';
 import { currentAvatar } from '../../util/util';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../lib/firebase';
+import FullScreenLoader from '../../components/UI/FullScreenLoader';
 
 
 
@@ -23,10 +26,13 @@ const SettingsPage = () => {
     // <---- useSelectors ------>
     const settingsDetails = useSelector(
         (state: { settings: SettingsSliceData }) => state.settings)
+    const authDetails = useSelector(
+        (state: { auth: authSliceData }) => state.auth)
 
     // <---- useStates + variables ------>
     const [showDisclaimer, setShowDisclaimer] = useState(settingsDetails.isDisclaimer)
     const [showChangeAvater, setChangeAvater] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     // <------- HOOKS ------>
     useIonViewWillLeave(() => {
@@ -39,8 +45,14 @@ const SettingsPage = () => {
 
     });
 
+    useEffect(() => {
+
+    }, [])
+
+
 
     // <---- Functions ------>
+
 
     // Unhide tab bar
     const showTabBar = (): void => {
@@ -96,7 +108,7 @@ const SettingsPage = () => {
                     <div className='flex flex-col items-center gap-2 mb-6'>
                         <img className='flex items-center justify-center rounded-full border border-gray/100 px-[15px] py-[17px]' src={currentAvatar()} />
 
-                        <p className='text-gray/800 text-lg font-medium tracking-[-0.27px]'>Ajiteru Dolapo</p>
+                        <p className='text-gray/800 text-lg font-medium tracking-[-0.27px]'>{authDetails.userDetails?.full_name}</p>
 
                         <button
                             className='px-4 py-2 rounded-[99px] border border-solid border-gray/100 text-[#0BA5EC] font-medium text-sm tracking-[-0.21px]'
@@ -109,7 +121,7 @@ const SettingsPage = () => {
                         </button>
                     </div>
 
-                    <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-4 mb-[140px]'>
                         {
                             settings_nav.map((nav_item, index) => (
                                 <button
@@ -129,6 +141,28 @@ const SettingsPage = () => {
                         }
                     </div>
 
+
+                    <div className='flex items-center justify-center mx-auto text-center'>
+                        <button
+                            className='text-[#EC0B0B] text-sm font-medium'
+                            type='button'
+                            onClick={async () => {
+                                setLoading(true)
+                                await signOut(auth).then(() => {
+                                    hideTabBar()
+                                    setLoading(false)
+                                    router.push("/")
+                                    sessionStorage.removeItem("_u");
+                                }).catch((error) => {
+                                    hideTabBar()
+                                    setLoading(false)
+                                    router.push("/")
+                                    sessionStorage.removeItem("_u");
+                                });
+                            }}
+                        >Logout</button>
+
+                    </div>
                 </div>
 
 
@@ -155,6 +189,9 @@ const SettingsPage = () => {
                     header='New avatar'
                     modalIsOpen={showChangeAvater}
                     subheader='Select a new avatar profile'
+                />
+
+                <FullScreenLoader loading={loading} text='Logging out'
                 />
             </IonContent>
         </IonPage >

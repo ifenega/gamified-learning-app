@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import CustomLabel from '../../../components/InputFields/CustomLabel';
@@ -6,10 +6,15 @@ import CustomInput from '../../../components/InputFields/CustomInput';
 import FormError from '../../../components/InputFields/FormError';
 import CustomPasswordInput from '../../../components/InputFields/CustomPasswordInput';
 import { Button, TextButton } from '../../../components/Buttons/Button';
-import { CustomToast } from '../../../util/util';
+import { CustomToast, utf8_to_b64 } from '../../../util/util';
 import PasswordValidation from '../../../components/UI/PasswordValidation';
 import checkbox from '../../../assets/auth/checkbox.svg'
 import checkboxTicked from '../../../assets/auth/checkboxTicked.svg'
+import { auth, db } from '../../../lib/firebase';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useIonRouter } from '@ionic/react';
+import ToastContainer from '../../../components/UI/CustomToast';
+import { doc, setDoc } from 'firebase/firestore';
 
 
 type Props = {
@@ -19,18 +24,66 @@ type Props = {
 const Signup = (props: Props) => {
 
     // <---------- Utility class --------->
+    const router = useIonRouter()
+
     // <---------- useSelectors --------->
     // <---------- HOOKS ------------>
     // <---------- useStates + variables ---------->
+    const [loading, setLoading] = useState(false)
     const initialData = {
         email: '',
         password: '',
-        confiirm_password: '',
+        confirm_password: '',
         terms: false,
+        full_name: "",
     }
     // <---------- Functions ---------->
     const onSubmit = (values: any) => {
-        CustomToast('success', 'Account successfully created')
+        console.log(values)
+        setLoading(true)
+        createUserWithEmailAndPassword(auth, values.email, values.password)
+            .then(async (userCredential: any) => {
+                // Signed up 
+                const user = userCredential.user;
+                sessionStorage.setItem("_u", utf8_to_b64(user?.uid));
+
+                const currentTime = new Date()
+
+                await setDoc(doc(db, "users", user.uid), {
+                    ...values,
+                    uid: user?.uid,
+                    createdAt: currentTime.toLocaleTimeString(),
+                    age: "",
+                    gender: "",
+                    avatar: "Fearful red",
+                })
+                    .then((response) => {
+                        CustomToast('success', 'Account successfully created')
+                        console.log(response)
+                        router.push('/tabs/lessons')
+                        setLoading(false)
+
+                        
+                    })
+                    .catch((error) => {
+                        router.push('/welcome-screen')
+
+                        const errorMessage = error.message;
+                        const errorCode = error.code;
+                        CustomToast('error', errorCode)
+                        setLoading(false)
+
+                    });
+
+            })
+            .catch((error: any) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                CustomToast('error', errorCode)
+                setLoading(false)
+                // ..
+            });
+
         // props.handleClose()
     }
 
@@ -45,6 +98,23 @@ const Signup = (props: Props) => {
                     <Form>
                         <div className=''>
                             <div className='mb-10'>
+                                <div className='mb-3'>
+                                    <CustomLabel
+                                        name='Full name'
+                                        value_name='full_name'
+                                    />
+                                    <Field
+                                        type="text"
+                                        name="full_name"
+                                        component={CustomInput}
+                                        placeholder={"Ajiteru Dolapo"}
+                                        onChange={(e: any) => {
+                                            setFieldValue("full_name", e.target.value)
+                                        }}
+
+                                    />
+                                    <FormError value_name='full_name' />
+                                </div>
 
                                 <div className='mb-3'>
                                     <CustomLabel
@@ -145,8 +215,9 @@ const Signup = (props: Props) => {
                                 <Button
                                     text={'Create account'}
                                     type='submit'
-                                    disabled={!(isValid)}
-                                    status={false}
+                                    status={loading}
+                                    disabled={!(isValid) || loading}
+
 
                                 />
                                 <TextButton
@@ -174,7 +245,7 @@ export default Signup
 
 const validation = Yup.object({
     email: Yup.string().email("Invalid email address").required("You need to enter an email"),
-
+    full_name: Yup.string().required("Required"),
     password: Yup.string()
         .min(8, "Password must be minimum of 8 characters")
         .required("Required")

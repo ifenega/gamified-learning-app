@@ -34,7 +34,6 @@ import './theme/tailwind.css'
 import './theme/variables.css';
 import WelcomeScreen from './pages/auth/WelcomeScreen';
 import Disclaimer from './pages/auth/Disclaimer';
-import { firebaseConfig } from './lib/firebase';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Tabs from './tabs/Tabs';
