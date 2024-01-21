@@ -87,7 +87,7 @@ const LessonSelector = () => {
     const handleNext = () => {
         //to first set the page state to the info page
         setSubPage("info")
-
+console.log(currentIndex)
         //to move to the next task
         setCurrentIndex(prevIndex => prevIndex + 1);
 
@@ -126,7 +126,7 @@ const LessonSelector = () => {
         const currentContent: ContentItemType | null = correctionData && correctionData.length > currentCorrectionIndex
             ? correctionData[currentCorrectionIndex]
             : null;
-console.log(currentContent)
+        console.log(currentContent)
         const ContentTypeComponent = currentContent ? contentTypes[currentContent?.task?.type || currentContent?.title] || ErrorPage : ErrorPage;
 
         return (
