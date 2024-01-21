@@ -586,7 +586,7 @@ export const printingLesson = {
 
 //renewable energy lesson
 export const renewableEnergyLesson = {
-  title: "Exploring Renewable Energy",
+  title: "Renewable Energy",
   sections: {
     lessonDetails: {
       image: renewableEnergyImage, // Image showing various renewable energy sources
@@ -688,7 +688,7 @@ export const renewableEnergyLesson = {
 
 //space exploration lesson
 export const spaceExplorationLesson = {
-  title: "Adventures in Space Exploration",
+  title: "Space Exploration",
   sections: {
     lessonDetails: {
       image: spaceExplorationImage, // Image showing space exploration themes

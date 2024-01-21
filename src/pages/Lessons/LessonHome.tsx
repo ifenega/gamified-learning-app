@@ -59,7 +59,7 @@ const LessonHome = () => {
     const lessons = [
         {
             name: firstLesson.title,
-            icon: book1,
+            icon: book5,
             lesson: firstLesson,
             disabled: false,
             completed: false,
@@ -94,14 +94,14 @@ const LessonHome = () => {
         },
         {
             name: roboticsLesson.title,
-            icon: book1,
+            icon: book2,
             lesson: roboticsLesson,
             disabled: false,
             completed: false,
         },
         {
             name: printingLesson.title,
-            icon: book1,
+            icon: book4,
             lesson: printingLesson,
             disabled: false,
             completed: false,
