@@ -127,9 +127,7 @@ const LessonHome = () => {
         <IonPage className='ion-padding'>
             <TabHeader
                 title='Lessons'
-                info_action={() => {
-                    setShowInfo(true)
-                }}
+
             />
             <IonContent className=' '>
 
@@ -144,7 +142,7 @@ const LessonHome = () => {
                                 disabled={item.disabled}
                                 onClick={() => {
                                     if (item.lesson) {
-
+                                        setShowInfo(true)
                                         dispatch(lessonActions.setCurrentLesson(item.lesson))
 
                                         router.push('/tabs/lessons/lesson')
