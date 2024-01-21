@@ -10,7 +10,7 @@ import book3 from '../../assets/dashboard/Lessons/Books/book3.svg'
 import book4 from '../../assets/dashboard/Lessons/Books/book4.svg'
 import book5 from '../../assets/dashboard/Lessons/Books/book5.svg'
 import tickCircle from '../../assets/dashboard/Lessons/tickCircle.svg'
-import { aiLesson, arLesson, biotechnologyLesson, codingLesson, firstLesson, printingLesson, roboticsLesson, smartCitiesLesson, vrLesson } from './components/LessonJson';
+import { aiLesson, arLesson, biotechnologyLesson, codingLesson, firstLesson, printingLesson, renewableEnergyLesson, roboticsLesson, smartCitiesLesson, spaceExplorationLesson, vrLesson } from './components/LessonJson';
 import { AppDispatch } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { lessonActions } from '../../store/slices/lessonSlice';
@@ -83,7 +83,7 @@ const LessonHome = () => {
             icon: book4,
             lesson: vrLesson,
             disabled: false,
-            completed: true,
+            completed: false,
         },
         {
             name: codingLesson.title,
@@ -117,6 +117,20 @@ const LessonHome = () => {
             name: smartCitiesLesson.title,
             icon: book3,
             lesson: smartCitiesLesson,
+            disabled: false,
+            completed: false,
+        },
+        {
+            name: spaceExplorationLesson.title,
+            icon: book3,
+            lesson: spaceExplorationLesson,
+            disabled: false,
+            completed: false,
+        },
+        {
+            name: renewableEnergyLesson.title,
+            icon: book3,
+            lesson: renewableEnergyLesson,
             disabled: false,
             completed: false,
         },

@@ -887,7 +887,7 @@ export const biotechnologyLesson = {
 
 //smart cities lesson
 export const smartCitiesLesson = {
-  title: "Journey to Smart Cities and Future Transportation",
+  title: "Smart Cities & Transportation",
   sections: {
     lessonDetails: {
       image: smartCitiesImage, // Image depicting elements of smart cities and future transportation
