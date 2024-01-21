@@ -10,7 +10,7 @@ import book3 from '../../assets/dashboard/Lessons/Books/book3.svg'
 import book4 from '../../assets/dashboard/Lessons/Books/book4.svg'
 import book5 from '../../assets/dashboard/Lessons/Books/book5.svg'
 import tickCircle from '../../assets/dashboard/Lessons/tickCircle.svg'
-import { firstLesson } from './components/LessonJson';
+import { aiLesson, arLesson, biotechnologyLesson, codingLesson, firstLesson, printingLesson, roboticsLesson, smartCitiesLesson, vrLesson } from './components/LessonJson';
 import { AppDispatch } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { lessonActions } from '../../store/slices/lessonSlice';
@@ -58,47 +58,69 @@ const LessonHome = () => {
 
     const lessons = [
         {
-            name: "Internet of things",
+            name: firstLesson.title,
             icon: book1,
             lesson: firstLesson,
             disabled: false,
             completed: false,
         },
         {
-            name: "Software developement",
+            name: aiLesson.title,
             icon: book2,
-            lesson: null,
+            lesson: aiLesson,
             disabled: false,
             completed: false,
         },
         {
-            name: "Internet of things",
+            name: arLesson.title,
             icon: book3,
-            lesson: firstLesson,
+            lesson: arLesson,
             disabled: false,
             completed: false,
         },
         {
-            name: "Internet of things",
+            name: vrLesson.title,
             icon: book4,
-            lesson: firstLesson,
+            lesson: vrLesson,
             disabled: false,
             completed: true,
         },
         {
-            name: "Internet of things",
+            name: codingLesson.title,
             icon: book5,
-            lesson: firstLesson,
+            lesson: codingLesson,
             disabled: false,
             completed: false,
         },
         {
-            name: "Internet of things",
+            name: roboticsLesson.title,
             icon: book1,
-            lesson: firstLesson,
+            lesson: roboticsLesson,
             disabled: false,
             completed: false,
         },
+        {
+            name: printingLesson.title,
+            icon: book1,
+            lesson: printingLesson,
+            disabled: false,
+            completed: false,
+        },
+        {
+            name: biotechnologyLesson.title,
+            icon: book2,
+            lesson: biotechnologyLesson,
+            disabled: false,
+            completed: false,
+        },
+        {
+            name: smartCitiesLesson.title,
+            icon: book3,
+            lesson: smartCitiesLesson,
+            disabled: false,
+            completed: false,
+        },
+
     ]
 
     return (
