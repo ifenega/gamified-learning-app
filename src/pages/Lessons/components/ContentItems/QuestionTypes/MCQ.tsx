@@ -119,9 +119,15 @@ const MCQ = (props: Props) => {
                                         isCorrect={isCorrect}
                                         type='button'
                                         action={() => {
+                                            setCorrect(false)
+                                            setSubmit(false)
+                                            console.log('sdsddsdsdefriufbwrif')
                                             if (!props.disbaleNext) {
+                                                console.log('next')
+                                              
                                                 props.handleNext()
                                             } else {
+                                                console.log('completed')
                                                 props.handleCompleted()
                                             }
                                         }}

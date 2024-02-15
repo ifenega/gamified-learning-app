@@ -22,7 +22,7 @@ const LessonSelector = () => {
   const lessonData: LessonType = useSelector(
     (state: any) => state.lesson.currentLesson
   );
-  console.log(lessonData);
+
 
   const router = useIonRouter();
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const LessonSelector = () => {
       setShowCorrectionDisclaimer(true);
       handleCorrection();
     } else {
-      console.log("hanldCompleted");
+
 
       dispatch(lessonActions.setCourseCompleted(true));
       router.goBack();
@@ -88,7 +88,7 @@ const LessonSelector = () => {
   const handleNext = () => {
     //to first set the page state to the info page
     setSubPage("info");
-    console.log(currentIndex);
+
     //to move to the next task
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
@@ -98,14 +98,21 @@ const LessonSelector = () => {
     );
     setCorrectionData(temp);
 
+
     if (temp.length === 0) {
-        console.log('done')
+
+      setValues({
+        lessonOutline: false,
+        intro: false,
+        lesson: false,
+        correction: false,
+      });
       dispatch(lessonActions.setCourseCompleted(true));
       router.goBack();
     } else {
       //to first set the page state to the info page
-      setSubPage("info");
-      console.log(currentIndex);
+      setSubPage("question");
+
       //to move to the next task
       setCurrentCorrectionIndex((prevIndex) => prevIndex + 1);
     }
@@ -148,28 +155,29 @@ const LessonSelector = () => {
   };
 
   const renderCorrection = () => {
-    console.log("check");
-    console.log(correctionData);
-    console.log(currentCorrectionIndex);
+
+
     const currentContent: ContentItemType | null =
       correctionData && correctionData.length > 0 ? correctionData[0] : null;
-    console.log(currentContent);
+
     const ContentTypeComponent = currentContent
       ? contentTypes[currentContent?.task?.type || currentContent?.title] ||
         ErrorPage
       : ErrorPage;
-    if (currentContent === null) {
+    if (currentContent === null || !ContentTypeComponent) {
       dispatch(lessonActions.setCourseCompleted(true));
       router.goBack();
+      return;
+    } else {
+      return (
+        <ContentTypeComponent
+          data={currentContent}
+          disbaleNext={correctionData.length === 0}
+          handleNext={handleCorrectionIndex}
+          handleCompleted={handleCompleted}
+        />
+      );
     }
-    return (
-      <ContentTypeComponent
-        data={currentContent}
-        disbaleNext={correctionData.length === 0}
-        handleNext={handleCorrectionIndex}
-        handleCompleted={handleCompleted}
-      />
-    );
   };
 
   const [values, setValues] = useState({
@@ -204,7 +212,7 @@ const LessonSelector = () => {
     });
   };
 
-  console.log(values);
+
   const showDefaultSelector = () => (
     <>
       {values.lessonOutline && (
